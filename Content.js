@@ -10,6 +10,26 @@ function createAIButton() {
    return button;
 }
 
+function createAIDropDown(){
+    const dropdown = document.createElement('select');
+dropdown.className = 'T-I J-J5-Ji aoO v7 T-I-atl L3';
+dropdown.style.marginRight = '8px';
+dropdown.setAttribute('role', 'listbox');
+dropdown.setAttribute('data-tooltip', 'Select an Option');
+
+const options = ['friendly', 'professionaly', 'saracasim'];
+options.forEach(optionText => {
+    const option = document.createElement('option');
+    option.value = optionText;
+    option.innerHTML = optionText;
+    dropdown.appendChild(option);
+});
+
+return dropdown;
+
+
+}
+
 function getEmailContent() {
     const selectors = [
         '.h7',
@@ -24,6 +44,24 @@ function getEmailContent() {
         }
         return '';
     }
+}
+
+function getTone(){
+    function getSelectedOption() {
+        const selectors = [
+            '.T-I.J-J5-Ji.aoO.v7.T-I-atl.L3 select'
+        ];
+        
+        for (const selector of selectors) {
+            const dropdown = document.querySelector(selector);
+            if (dropdown) {
+                return dropdown.value.trim();
+            }
+            return '';
+        }
+    }
+    
+
 }
 
 
@@ -55,6 +93,7 @@ function injectButton() {
 
     console.log("Toolbar found, creating AI button");
     const button = createAIButton();
+    const button2=createAIDropDown();
     button.classList.add('ai-reply-button');
 
     button.addEventListener('click', async () => {
@@ -63,6 +102,7 @@ function injectButton() {
             button.disabled = true;
 
             const emailContent = getEmailContent();
+            const Tone=getTone();
 
             console.log(15466+emailContent);
             const response = await fetch('http://localhost:1651/v1/api/generate', {
@@ -100,6 +140,8 @@ function injectButton() {
     });
 
     toolbar.insertBefore(button, toolbar.firstChild);
+    toolbar.insertBefore(button2, toolbar.firstChild);
+
 }
 
 const observer = new MutationObserver((mutations) => {
