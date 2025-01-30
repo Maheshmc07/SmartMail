@@ -1,0 +1,39 @@
+{
+    "name": "SmartMail",
+    "description": "AI-powered Email Replier",
+    "version": "1.0",
+    "manifest_version": 3,
+    "permissions":["activeTab","storage"],
+    "host_permissions": [
+        "http://localhost:1651/*",
+        "*://mail.google.com/*"
+    ],
+   "content_scripts": [
+    {
+      "js": [
+        "Content.js"
+      ],
+      "matches": [
+         "*://mail.google.com/*"
+      ],
+      "css":["Content.css"],
+
+      "run_at":"document_end"
+
+    }
+  ],
+
+
+
+  "web_accessible_resources": [
+    {
+      "resources": [ "icons/*" ],
+      "matches": [ "*://mail.google.com/*" ]
+    }],
+
+    "action": {
+      "default_title": "Email Writer Assitant",
+      "default_icon": "SmartMail.png"
+      
+    }
+  }
